@@ -138,7 +138,7 @@ select.field {
 .hero-shade {
   background:
     linear-gradient(to bottom, rgba(14, 10, 6, .55) 0%, rgba(14, 10, 6, 0) 22%, rgba(14, 10, 6, 0) 75%, rgba(14, 10, 6, .55) 100%),
-    linear-gradient(to left, rgba(14, 10, 6, .86) 0%, rgba(14, 10, 6, .72) 40%, rgba(14, 10, 6, .2) 100%);
+    linear-gradient(to left, rgba(14, 10, 6, .92) 0%, rgba(14, 10, 6, .84) 38%, rgba(14, 10, 6, .35) 72%, rgba(14, 10, 6, .1) 100%);
 }
 @media (max-width: 767px) {
   .hero-shade { background: rgba(14, 10, 6, .72); }
@@ -147,3 +147,4 @@ select.field {
   background: linear-gradient(145deg, #C98A5B 0%, #A8643A 55%, #7A4426 100%);
   box-shadow: 0 24px 50px -22px rgba(90, 45, 20, .65), inset 0 1px 0 rgba(255, 255, 255, .25);
 }
+.hero-copy { text-shadow: 0 2px 18px rgba(0, 0, 0, .55); }
