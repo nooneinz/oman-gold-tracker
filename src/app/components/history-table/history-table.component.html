@@ -1,0 +1,60 @@
+<section id="history" class="mx-auto grid max-w-[75rem] gap-4 px-5 pt-6 sm:px-8 md:grid-cols-[1fr_15rem]" dir="ltr" aria-labelledby="history-title">
+  <div class="soft-card overflow-hidden p-5 sm:p-6" dir="rtl">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <h2 id="history-title" class="text-[0.875rem] font-semibold text-ink">سجل الأسعار</h2>
+      <div class="flex flex-wrap items-center gap-2">
+        <select class="field !w-auto !py-1.5 !text-[0.6875rem]" [(ngModel)]="days" (ngModelChange)="resetPage()" aria-label="الفترة الزمنية">
+          <option *ngFor="let p of periods" [ngValue]="p.days">{{ p.label }}</option>
+        </select>
+        <select class="field !w-auto !py-1.5 !text-[0.6875rem]" [(ngModel)]="karat" (ngModelChange)="resetPage()" aria-label="العيار">
+          <option *ngFor="let k of karats" [value]="k.key">{{ k.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <p *ngIf="hasError" class="mt-4 text-sm text-[var(--down)]" role="alert">تعذر تحميل سجل الأسعار من واجهة API.</p>
+
+    <div class="-mx-1 mt-4 overflow-x-auto px-1">
+      <table class="w-full min-w-[28.75rem] text-right text-[0.6875rem]">
+        <thead>
+          <tr class="bg-field text-muted">
+            <th class="rounded-s-lg px-3 py-2.5 font-medium">
+              <button type="button" (click)="toggleSort()" class="inline-flex items-center gap-1 hover:text-gold-strong">
+                التاريخ <span aria-hidden="true">{{ descending ? '▾' : '▴' }}</span>
+              </button>
+            </th>
+            <th class="px-3 py-2.5 font-medium">العيار</th>
+            <th class="px-3 py-2.5 font-medium">سعر الجرام (<span class="num">OMR</span>)</th>
+            <th class="rounded-e-lg px-3 py-2.5 font-medium">التغير اليومي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of pagedRows" class="border-b border-line last:border-0">
+            <td class="px-3 py-3 text-ink">{{ row.date }}</td>
+            <td class="px-3 py-3 text-muted">{{ karatLabel }}</td>
+            <td class="num px-3 py-3 text-right text-ink">{{ row.price | number:'1.3-3' }}</td>
+            <td class="num px-3 py-3 text-right" [style.color]="row.changePercent < 0 ? 'var(--down)' : row.changePercent > 0 ? 'var(--up)' : 'var(--muted)'">
+              {{ row.changePercent > 0 ? '+' : '' }}{{ row.changePercent | number:'1.2-2' }}%
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-3 flex items-center justify-between text-[0.625rem] text-muted">
+      <span>صفحة <span class="num">{{ page }}</span> من <span class="num">{{ totalPages }}</span></span>
+      <div class="flex items-center gap-1.5">
+        <button type="button" (click)="goToPage(page - 1)" [disabled]="page <= 1"
+          class="rounded-full border border-line px-3 py-1 transition hover:text-gold-strong disabled:opacity-40">السابق</button>
+        <button type="button" (click)="goToPage(page + 1)" [disabled]="page >= totalPages"
+          class="rounded-full border border-line px-3 py-1 transition hover:text-gold-strong disabled:opacity-40">التالي</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- quote card with liquid gold artwork -->
+  <aside class="relative isolate hidden min-h-[13.75rem] overflow-hidden rounded-[1.1rem] border border-line md:block" style="background: var(--quote-bg)" dir="rtl">
+    <p class="relative z-10 p-5 text-[0.75rem] font-medium leading-7 text-ink">الذهب ليس مجرد معدن،<br />بل قيمة لا تُقدّر بثمن.</p>
+    <div class="quote-liquid absolute inset-x-0 bottom-0 h-3/5" aria-hidden="true"></div>
+  </aside>
+</section>

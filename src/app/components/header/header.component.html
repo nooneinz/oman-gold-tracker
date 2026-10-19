@@ -1,0 +1,22 @@
+<header class="absolute inset-x-0 top-0 z-30 text-white">
+  <div class="mx-auto flex h-[4.5rem] max-w-[75rem] items-center justify-between px-5 sm:px-8" dir="ltr">
+    <a href="#top" aria-label="GoldOMR"><app-logo [size]="24" tone="light"></app-logo></a>
+
+    <nav class="hidden items-center gap-8 text-[0.8rem] font-medium text-white/70 md:flex" dir="rtl" aria-label="التنقل الرئيسي">
+      <a *ngFor="let l of links; let first = first" [href]="l.href"
+        class="transition hover:text-[#E8C48A]" [class.text-white]="first" [class.font-semibold]="first">{{ l.label }}</a>
+    </nav>
+
+    <div class="flex items-center gap-3 text-white/75">
+      <button type="button" (click)="toggleTheme()" role="switch" [attr.aria-checked]="(theme$ | async) === 'dark'"
+        aria-label="تبديل الوضع الفاتح والداكن"
+        class="relative h-6 w-11 rounded-full border border-white/25 bg-white/10 backdrop-blur transition">
+        <span class="absolute top-0.5 flex h-[1.125rem] w-[1.125rem] items-center justify-center rounded-full bg-[#E2B876] shadow transition-all"
+          [ngClass]="(theme$ | async) === 'dark' ? 'right-0.5' : 'left-0.5'">
+          <svg *ngIf="(theme$ | async) !== 'dark'" viewBox="0 0 24 24" class="h-3 w-3 text-white" fill="currentColor"><circle cx="12" cy="12" r="5" /></svg>
+          <svg *ngIf="(theme$ | async) === 'dark'" viewBox="0 0 24 24" class="h-3 w-3 text-black" fill="currentColor"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" /></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>

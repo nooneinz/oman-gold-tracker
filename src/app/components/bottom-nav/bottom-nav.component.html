@@ -1,0 +1,10 @@
+<nav class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-card/95 backdrop-blur md:hidden" aria-label="التنقل السفلي">
+  <ul class="mx-auto flex max-w-md items-center justify-around px-2 py-2">
+    <li *ngFor="let item of items; let first = first">
+      <a [href]="item.href" class="flex flex-col items-center gap-1 px-3 py-1 text-[0.625rem] font-medium" [ngClass]="first ? 'text-gold-strong' : 'text-muted'">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path [attr.d]="item.icon" /></svg>
+        {{ item.label }}
+      </a>
+    </li>
+  </ul>
+</nav>

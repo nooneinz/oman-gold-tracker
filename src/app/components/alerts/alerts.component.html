@@ -1,0 +1,79 @@
+<section id="alerts" class="my-10 scroll-mt-24 rounded-2xl border border-gold-200/60 bg-[var(--surface)] p-6 shadow-sm dark:border-charcoal-400">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h2 class="text-xl font-bold text-[var(--text)] sm:text-2xl">{{ 'alerts.title' | tr }}</h2>
+      <p class="mt-1 text-sm text-[var(--text-muted)]">{{ 'alerts.subtitle' | tr }}</p>
+    </div>
+    <button *ngIf="notificationsSupported && !notificationsEnabled" type="button" (click)="enableNotifications()"
+      class="inline-flex items-center gap-2 rounded-full border border-gold-300/80 px-3.5 py-2 text-xs font-bold text-[var(--text)] transition hover:bg-gold-50 dark:border-gold-400/30 dark:hover:bg-charcoal-500">
+      <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4a4.5 4.5 0 0 1 4.5 4.5c0 4.5 1.5 5.5 1.5 6.5H6c0-1 1.5-2 1.5-6.5A4.5 4.5 0 0 1 12 4Z" /><path d="M10 18a2 2 0 0 0 4 0" /></svg>
+      {{ 'alerts.enableNotif' | tr }}
+    </button>
+    <span *ngIf="notificationsEnabled" class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-600">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>{{ 'alerts.notifEnabled' | tr }}
+    </span>
+  </div>
+
+  <p *ngIf="hasError" class="mb-4 text-sm text-rose-600" role="alert">{{ 'prices.error' | tr }}</p>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+    <div>
+      <label class="mb-2 block text-xs font-semibold text-[var(--text-muted)]">{{ 'alerts.karat' | tr }}</label>
+      <select [(ngModel)]="karat"
+        class="w-full rounded-xl border border-gold-200/60 bg-[var(--surface-2)] p-3 text-[var(--text)] focus:border-gold-500 focus:outline-none dark:border-charcoal-400">
+        <option value="18">18K</option>
+        <option value="21">21K</option>
+        <option value="22">22K</option>
+        <option value="24">24K</option>
+      </select>
+      <p *ngIf="priceFor(karat) !== null" class="mt-1.5 text-[0.6875rem] text-[var(--text-muted)]" dir="ltr">
+        {{ 'alerts.current' | tr }}: {{ priceFor(karat) | number:'1.3-3' }} {{ 'prices.unit' | tr }}
+      </p>
+    </div>
+
+    <div>
+      <label class="mb-2 block text-xs font-semibold text-[var(--text-muted)]">{{ 'alerts.direction' | tr }}</label>
+      <select [(ngModel)]="direction"
+        class="w-full rounded-xl border border-gold-200/60 bg-[var(--surface-2)] p-3 text-[var(--text)] focus:border-gold-500 focus:outline-none dark:border-charcoal-400">
+        <option value="above">{{ 'alerts.above' | tr }}</option>
+        <option value="below">{{ 'alerts.below' | tr }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="mb-2 block text-xs font-semibold text-[var(--text-muted)]">{{ 'alerts.targetPrice' | tr }}</label>
+      <input type="number" min="0.001" step="any" inputmode="decimal" [(ngModel)]="targetPrice" [placeholder]="'alerts.placeholderPrice' | tr"
+        class="w-full rounded-xl border border-gold-200/60 bg-[var(--surface-2)] p-3 text-[var(--text)] focus:border-gold-500 focus:outline-none dark:border-charcoal-400" />
+    </div>
+
+    <button (click)="addAlert()"
+      class="w-full rounded-full bg-gold-gradient p-3 font-bold text-charcoal-800 shadow-gold-sm transition hover:-translate-y-0.5 hover:shadow-gold">
+      {{ 'alerts.add' | tr }}
+    </button>
+  </div>
+
+  <div class="mt-6 space-y-2">
+    <ng-container *ngIf="(alerts$ | async) as alerts">
+      <p *ngIf="alerts.length === 0" class="rounded-xl border border-dashed border-gold-300/60 bg-[var(--surface-2)] px-4 py-5 text-center text-sm text-[var(--text-muted)]">
+        {{ 'alerts.empty' | tr }}
+      </p>
+      <div *ngFor="let alert of alerts" class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gold-200/60 p-3.5 dark:border-charcoal-400">
+        <div class="flex items-center gap-3">
+          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold-gradient text-xs font-black text-charcoal-800">{{ alert.karat }}K</span>
+          <div>
+            <p class="text-sm font-semibold text-[var(--text)]" dir="ltr">
+              {{ (alert.direction === 'above' ? 'alerts.above' : 'alerts.below') | tr }} {{ alert.targetPrice | number:'1.3-3' }} {{ 'prices.unit' | tr }}
+            </p>
+            <p class="text-[0.6875rem]" [ngClass]="alert.triggered ? 'text-emerald-600' : 'text-[var(--text-muted)]'">
+              {{ (alert.triggered ? 'alerts.triggered' : 'alerts.active') | tr }}
+            </p>
+          </div>
+        </div>
+        <button type="button" (click)="remove(alert.id)"
+          class="rounded-full border border-rose-300/60 px-3 py-1.5 text-xs font-semibold text-rose-600 transition hover:bg-rose-50 dark:border-rose-400/30 dark:hover:bg-rose-500/10">
+          {{ 'alerts.delete' | tr }}
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</section>

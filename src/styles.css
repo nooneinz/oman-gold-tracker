@@ -1,1 +1,149 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --page: #FAF5F0;
+  --card: #FBF7F2;
+  --field: #FCF8F3;
+  --ink: #1D1D1B;
+  --muted: #9A8A7A;
+  --line: rgba(190, 160, 120, 0.22);
+  --gold: #C79A5E;
+  --gold-strong: #A9763A;
+  --btn: #D1A574;
+  --hero-edge: 245, 237, 227;
+  --hero-bg: linear-gradient(135deg, #F7F1E8 0%, #F3E9DC 100%);
+  --card-shadow: 0 8px 28px -14px rgba(120, 90, 50, 0.22);
+  --promo-bg: linear-gradient(120deg, #4A3523 0%, #6E533B 60%, #7C5F45 100%);
+  --quote-bg: #F3EADF;
+  --up: #3E9B6B;
+  --down: #C2543F;
+}
+
+.dark {
+  --page: #0E0F0E;
+  --card: #131514;
+  --field: #181A19;
+  --ink: #F4EDE4;
+  --muted: #8E867A;
+  --line: rgba(255, 255, 255, 0.07);
+  --gold: #C99A5B;
+  --gold-strong: #D9AE6E;
+  --btn: #B58E62;
+  --hero-edge: 15, 15, 14;
+  --hero-bg: #0F0F0E;
+  --card-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.8);
+  --promo-bg: #14110D;
+  --quote-bg: #17130F;
+  --up: #52B788;
+  --down: #E07A62;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  background-color: var(--page);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+  transition: background-color .25s ease, color .25s ease;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+::selection {
+  background-color: var(--gold);
+  color: #fff;
+}
+
+.num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+}
+
+.brand-font {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.field {
+  width: 100%;
+  appearance: none;
+  background-color: var(--field);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.8rem;
+  color: var(--ink);
+  outline: none;
+}
+.field:focus {
+  border-color: var(--gold);
+}
+select.field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239A8A7A' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-position: left 0.8rem center;
+  padding-left: 2.2rem;
+}
+
+.soft-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  box-shadow: var(--card-shadow);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up .6s ease both;
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { scrollbar-width: none; }
+
+/* liquid gold artwork */
+.hero-liquid {
+  background: url('assets/images/gold-swirl.jpg') center / cover no-repeat;
+}
+.promo-liquid {
+  background:
+    linear-gradient(to right, rgba(74, 53, 35, .35), rgba(74, 53, 35, .94) 60%),
+    url('assets/images/gold-molten.jpg') center / cover no-repeat;
+}
+.quote-liquid {
+  background: url('assets/images/gold-molten.jpg') center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  opacity: .8;
+}
+.dark .quote-liquid {
+  background-image: url('assets/images/gold-ripples.jpg');
+  opacity: .9;
+}
+
+/* laptop / desktop scale: every rem-based size grows with the viewport */
+@media (min-width: 1280px) { html { font-size: 17px; } }
+@media (min-width: 1600px) { html { font-size: 19px; } }
+.hero-shade {
+  background:
+    linear-gradient(to bottom, rgba(14, 10, 6, .55) 0%, rgba(14, 10, 6, 0) 22%, rgba(14, 10, 6, 0) 75%, rgba(14, 10, 6, .55) 100%),
+    linear-gradient(to left, rgba(14, 10, 6, .86) 0%, rgba(14, 10, 6, .72) 40%, rgba(14, 10, 6, .2) 100%);
+}
+@media (max-width: 767px) {
+  .hero-shade { background: rgba(14, 10, 6, .72); }
+}
+.copper-panel {
+  background: linear-gradient(145deg, #C98A5B 0%, #A8643A 55%, #7A4426 100%);
+  box-shadow: 0 24px 50px -22px rgba(90, 45, 20, .65), inset 0 1px 0 rgba(255, 255, 255, .25);
+}

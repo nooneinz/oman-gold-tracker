@@ -1,0 +1,15 @@
+<section id="prices" class="mx-auto max-w-[75rem] px-5 pt-8 sm:px-8">
+  <div class="mb-4 flex items-center justify-between gap-3">
+    <h2 class="text-[0.9375rem] font-semibold text-ink">أسعار الذهب اليوم</h2>
+    <span class="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 text-[0.6875rem] text-muted">
+      <span class="inline-block h-2.5 w-3.5 overflow-hidden rounded-[2px]" style="background: linear-gradient(to bottom, #fff 33%, #db161b 33% 66%, #008000 66%)" aria-hidden="true"></span>
+      البلد: سلطنة عُمان (OMR)
+      <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg>
+    </span>
+  </div>
+
+  <div class="hide-scrollbar -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0">
+    <app-price-card *ngFor="let card of cards" [card]="card" class="block min-w-[70%] snap-center sm:min-w-0"></app-price-card>
+  </div>
+  <p *ngIf="hasError" class="mt-4 text-sm text-[var(--down)]" role="alert">تعذر تحميل الأسعار. تحقق من تشغيل واجهة API.</p>
+</section>

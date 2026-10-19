@@ -1,0 +1,47 @@
+<!-- Overlay backdrop, shown at every screen size while the drawer is open -->
+<div
+  *ngIf="(sidebarOpen$ | async)"
+  class="fixed inset-0 z-40 bg-charcoal-900/60 backdrop-blur-sm"
+  (click)="close()"
+  aria-hidden="true">
+</div>
+
+<aside
+  class="fixed inset-y-0 z-50 flex w-64 flex-col border-gold-200/60 bg-[var(--surface)] shadow-2xl transition-transform duration-300 ease-out ltr:left-0 ltr:border-r rtl:right-0 rtl:border-l dark:border-charcoal-400"
+  [class.translate-x-0]="(sidebarOpen$ | async)"
+  [class.ltr:-translate-x-full]="!(sidebarOpen$ | async)"
+  [class.rtl:translate-x-full]="!(sidebarOpen$ | async)"
+  aria-label="القائمة الجانبية">
+
+  <div class="flex items-center gap-3 border-b border-gold-200/60 px-5 py-5 dark:border-charcoal-400">
+    <span class="h-11 w-11 shrink-0 overflow-hidden rounded-xl shadow-gold-sm ring-1 ring-gold-400/40">
+      <img src="assets/images/logo.png" alt="Oman Gold emblem" class="h-full w-full object-cover" />
+    </span>
+    <div class="min-w-0">
+      <p class="truncate text-sm font-bold text-[var(--text)]">{{ 'brand.name' | tr }}</p>
+      <p class="truncate text-[0.6875rem] font-medium text-[var(--text-muted)]">{{ 'brand.tagline' | tr }}</p>
+    </div>
+  </div>
+
+  <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-5" aria-label="التنقل الرئيسي">
+    <a *ngFor="let item of items" [href]="item.href" (click)="close()"
+      class="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[var(--text-muted)] transition hover:bg-gold-50 hover:text-gold-700 dark:hover:bg-charcoal-500 dark:hover:text-gold-300">
+      <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold-50 text-gold-700 transition group-hover:bg-gold-500 group-hover:text-white dark:bg-charcoal-500 dark:text-gold-300 dark:group-hover:bg-gold-500 dark:group-hover:text-charcoal-900">
+        <ng-container [ngSwitch]="item.icon">
+          <svg *ngSwitchCase="'home'" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11.5 12 4l8 7.5M6 10v9h12v-9" /></svg>
+          <svg *ngSwitchCase="'prices'" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5v9M9 9.8c0-1.3 1.3-2.3 3-2.3s3 .9 3 2.1c0 3-6 1.6-6 4.6 0 1.3 1.3 2.3 3 2.3s3-1 3-2.3" /></svg>
+          <svg *ngSwitchCase="'calculator'" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3.5" width="14" height="17" rx="2" /><path d="M8 7.5h8M8 12h1.5M8 15.5h1.5M12.25 12h1.5M12.25 15.5h1.5M16.5 12v4" /></svg>
+          <svg *ngSwitchCase="'chart'" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16" /><path d="m6.5 15 3.5-4 3 2.5L18 8" /></svg>
+          <svg *ngSwitchCase="'history'" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M3.5 9.5h17M8 5v14" /></svg>
+          <svg *ngSwitchCase="'alerts'" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4a4.5 4.5 0 0 1 4.5 4.5c0 4.5 1.5 5.5 1.5 6.5H6c0-1 1.5-2 1.5-6.5A4.5 4.5 0 0 1 12 4Z" /><path d="M10 18a2 2 0 0 0 4 0" /></svg>
+          <svg *ngSwitchCase="'settings'" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3" /><path d="M19 12a7 7 0 0 0-.1-1.2l1.9-1.5-2-3.4-2.2.9a7 7 0 0 0-2-1.2L14 3h-4l-.6 2.6a7 7 0 0 0-2 1.2l-2.2-.9-2 3.4L5.1 10.8A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-1.9 1.5 2 3.4 2.2-.9a7 7 0 0 0 2 1.2L10 21h4l.6-2.6a7 7 0 0 0 2-1.2l2.2.9 2-3.4-1.9-1.5c.1-.4.1-.8.1-1.2Z" /></svg>
+        </ng-container>
+      </span>
+      <span class="truncate">{{ item.labelKey | tr }}</span>
+    </a>
+  </nav>
+
+  <div class="border-t border-gold-200/60 px-5 py-4 dark:border-charcoal-400">
+    <p class="text-[0.6875rem] leading-5 text-[var(--text-muted)]">{{ 'hero.disclaimer' | tr }}</p>
+  </div>
+</aside>
